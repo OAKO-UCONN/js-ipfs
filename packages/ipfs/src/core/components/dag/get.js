@@ -8,8 +8,16 @@ const errcode = require('err-code')
 
 module.exports = ({ ipld, preload }) => {
   return withTimeoutOption(async function get (cid, options = {}) {
-    if (!CID.isCID(cid)) {
-      throw errcode(new Error('Invalid CID'), 'ERR_INVALID_CID')
+    try {
+      if (typeof cid === 'string' || cid instanceof String) {
+        cid = new CID(cid)
+      }
+
+      if (!CID.isCID(cid)) {
+        throw new Error('Invalid CID')
+      }
+    } catch (err) {
+      throw errcode(err, 'ERR_INVALID_CID')
     }
 
     if (options.preload !== false) {
