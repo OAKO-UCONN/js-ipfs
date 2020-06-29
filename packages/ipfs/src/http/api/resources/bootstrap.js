@@ -120,8 +120,7 @@ exports.addDefault = {
       }
     } = request
 
-    const list = await ipfs.bootstrap.add(null, {
-      default: true,
+    const list = await ipfs.bootstrap.reset({
       signal,
       timeout
     })

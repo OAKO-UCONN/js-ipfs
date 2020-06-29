@@ -81,7 +81,9 @@ An optional object which may have the following keys:
 ### Example
 
 ```JavaScript
-const cid = await ipfs.object.new('unixfs-dir')
+const cid = await ipfs.object.new({
+  template: 'unixfs-dir'
+})
 console.log(cid.toString())
 // Logs:
 // QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn

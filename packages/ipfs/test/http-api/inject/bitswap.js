@@ -25,6 +25,7 @@ describe('/bitswap', () => {
   describe('/wantlist', () => {
     const defaultOptions = {
       signal: sinon.match.instanceOf(AbortSignal),
+      peer: undefined,
       timeout: undefined
     }
 
@@ -33,7 +34,7 @@ describe('/bitswap', () => {
     })
 
     it('/wantlist', async () => {
-      ipfs.bitswap.wantlist.withArgs(undefined, defaultOptions).returns([
+      ipfs.bitswap.wantlist.withArgs(defaultOptions).returns([
         cid
       ])
 
@@ -47,7 +48,7 @@ describe('/bitswap', () => {
     })
 
     it('/wantlist?timeout=1s', async () => {
-      ipfs.bitswap.wantlist.withArgs(undefined, {
+      ipfs.bitswap.wantlist.withArgs({
         ...defaultOptions,
         timeout: 1000
       }).returns([
@@ -65,7 +66,7 @@ describe('/bitswap', () => {
 
     // TODO: unskip after switch to v1 CIDs by default
     it.skip('/wantlist?cid-base=base64', async () => {
-      ipfs.bitswap.wantlist.withArgs(undefined, defaultOptions).returns([
+      ipfs.bitswap.wantlist.withArgs(defaultOptions).returns([
         cid
       ])
 
@@ -79,7 +80,7 @@ describe('/bitswap', () => {
     })
 
     it('/wantlist?cid-base=invalid', async () => {
-      ipfs.bitswap.wantlist.withArgs(undefined, defaultOptions).returns([
+      ipfs.bitswap.wantlist.withArgs(defaultOptions).returns([
         cid
       ])
 
@@ -95,7 +96,10 @@ describe('/bitswap', () => {
     it('/wantlist?peer=QmSnuWmxptJZdLJpKRarxBMS2Ju2oANVrgbr2xWbie9b2D', async () => {
       const peerId = 'QmSnuWmxptJZdLJpKRarxBMS2Ju2oANVrgbr2xWbie9b2D'
 
-      ipfs.bitswap.wantlist.withArgs(peerId, defaultOptions).returns([
+      ipfs.bitswap.wantlist.withArgs({
+        ...defaultOptions,
+        peer: peerId
+      }).returns([
         cid
       ])
 

@@ -45,7 +45,8 @@ describe('/dag', () => {
   describe('/get', () => {
     const defaultOptions = {
       signal: sinon.match.instanceOf(AbortSignal),
-      timeout: undefined
+      timeout: undefined,
+      path: ''
     }
 
     it('only accepts POST', () => {
@@ -72,7 +73,7 @@ describe('/dag', () => {
 
     it('returns value', async () => {
       const node = new DAGNode(Buffer.from([]), [])
-      ipfs.dag.get.withArgs(cid, '', defaultOptions).returns({ value: node })
+      ipfs.dag.get.withArgs(cid, defaultOptions).returns({ value: node })
 
       const res = await http({
         method: 'POST',
@@ -86,7 +87,7 @@ describe('/dag', () => {
 
     it('uses text encoding for data by default', async () => {
       const node = new DAGNode(Buffer.from([0, 1, 2, 3]), [])
-      ipfs.dag.get.withArgs(cid, '', defaultOptions).returns({ value: node })
+      ipfs.dag.get.withArgs(cid, defaultOptions).returns({ value: node })
 
       const res = await http({
         method: 'POST',
@@ -101,7 +102,7 @@ describe('/dag', () => {
 
     it('overrides data encoding', async () => {
       const node = new DAGNode(Buffer.from([0, 1, 2, 3]), [])
-      ipfs.dag.get.withArgs(cid, '', defaultOptions).returns({ value: node })
+      ipfs.dag.get.withArgs(cid, defaultOptions).returns({ value: node })
 
       const res = await http({
         method: 'POST',
@@ -114,7 +115,10 @@ describe('/dag', () => {
     })
 
     it('returns value with a path as part of the cid', async () => {
-      ipfs.dag.get.withArgs(cid, 'foo', defaultOptions).returns({ value: 'bar' })
+      ipfs.dag.get.withArgs(cid, {
+        ...defaultOptions,
+        path: 'foo'
+      }).returns({ value: 'bar' })
 
       const res = await http({
         method: 'POST',
@@ -127,7 +131,10 @@ describe('/dag', () => {
 
     it('returns value with a path as part of the cid for dag-pb nodes', async () => {
       const node = new DAGNode(Buffer.from([0, 1, 2, 3]), [])
-      ipfs.dag.get.withArgs(cid, 'Data', defaultOptions).returns({ value: node.Data })
+      ipfs.dag.get.withArgs(cid, {
+        ...defaultOptions,
+        path: 'Data'
+      }).returns({ value: node.Data })
 
       const res = await http({
         method: 'POST',
@@ -145,7 +152,7 @@ describe('/dag', () => {
           qux: Buffer.from([0, 1, 2, 3])
         }
       }
-      ipfs.dag.get.withArgs(cid, '', defaultOptions).returns({ value: node })
+      ipfs.dag.get.withArgs(cid, defaultOptions).returns({ value: node })
 
       const res = await http({
         method: 'POST',
@@ -161,7 +168,7 @@ describe('/dag', () => {
         foo: 'bar',
         baz: Buffer.from([0, 1, 2, 3])
       }
-      ipfs.dag.get.withArgs(cid, '', defaultOptions).returns({ value: node })
+      ipfs.dag.get.withArgs(cid, defaultOptions).returns({ value: node })
 
       const res = await http({
         method: 'POST',
@@ -176,7 +183,7 @@ describe('/dag', () => {
       const node = {
         foo: 'bar'
       }
-      ipfs.dag.get.withArgs(cid, '', {
+      ipfs.dag.get.withArgs(cid, {
         ...defaultOptions,
         timeout: 1000
       }).returns({ value: node })

@@ -30,7 +30,10 @@ describe('bitswap', () => {
     }
 
     it('should return the wantlist', async () => {
-      ipfs.bitswap.wantlist.withArgs(undefined, defaultOptions).resolves([
+      ipfs.bitswap.wantlist.withArgs({
+        ...defaultOptions,
+        peer: undefined
+      }).resolves([
         new CID(key0),
         new CID(key1)
       ])
@@ -41,7 +44,10 @@ describe('bitswap', () => {
     })
 
     it('should get wantlist with CIDs encoded in specified base', async () => {
-      ipfs.bitswap.wantlist.withArgs(undefined, defaultOptions).resolves([
+      ipfs.bitswap.wantlist.withArgs({
+        ...defaultOptions,
+        peer: undefined
+      }).resolves([
         new CID(key0),
         new CID(key1)
       ])
@@ -51,15 +57,19 @@ describe('bitswap', () => {
     })
 
     it('wantlist peerid', async () => {
-      ipfs.bitswap.wantlist.withArgs(peerId, defaultOptions).resolves([])
+      ipfs.bitswap.wantlist.withArgs({
+        ...defaultOptions,
+        peer: peerId
+      }).resolves([])
 
       const out = await cli(`bitswap wantlist ${peerId}`, { ipfs })
       expect(out).to.eql('')
     })
 
     it('wantlist with a timeout', async () => {
-      ipfs.bitswap.wantlist.withArgs(peerId, {
+      ipfs.bitswap.wantlist.withArgs({
         ...defaultOptions,
+        peer: peerId,
         timeout: 1000
       }).resolves([])
 

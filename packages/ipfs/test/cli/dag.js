@@ -26,7 +26,8 @@ describe('dag', () => {
   describe('get', () => {
     const defaultOptions = {
       localResolve: false,
-      timeout: undefined
+      timeout: undefined,
+      path: ''
     }
 
     it('should get a node', async () => {
@@ -35,7 +36,10 @@ describe('dag', () => {
         value: Buffer.from('hello world')
       }
 
-      ipfs.dag.get.withArgs(cid, path, defaultOptions).returns(result)
+      ipfs.dag.get.withArgs(cid, {
+        ...defaultOptions,
+        path
+      }).returns(result)
 
       const out = await cli(`dag get ${cid}/${path}`, { ipfs })
 
@@ -47,7 +51,7 @@ describe('dag', () => {
         value: Buffer.from('hello world')
       }
 
-      ipfs.dag.get.withArgs(cid, '', {
+      ipfs.dag.get.withArgs(cid, {
         ...defaultOptions,
         localResolve: true
       }).returns(result)
@@ -64,7 +68,7 @@ describe('dag', () => {
         value: Buffer.from('hello world')
       }
 
-      ipfs.dag.get.withArgs(cid, '', {
+      ipfs.dag.get.withArgs(cid, {
         ...defaultOptions,
         timeout: 1000
       }).returns(result)

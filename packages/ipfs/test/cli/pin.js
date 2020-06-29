@@ -26,7 +26,8 @@ describe('pin', () => {
       pin: {
         rm: sinon.stub(),
         add: sinon.stub(),
-        ls: sinon.stub()
+        ls: sinon.stub(),
+        query: sinon.stub()
       }
     }
   })
@@ -163,7 +164,7 @@ describe('pin', () => {
     }
 
     it('lists all pins when no hash is passed', async () => {
-      ipfs.pin.ls.withArgs(undefined, defaultOptions).returns([{
+      ipfs.pin.ls.withArgs(defaultOptions).returns([{
         cid: new CID(pins.root),
         type: 'recursive'
       }])
@@ -173,7 +174,7 @@ describe('pin', () => {
     })
 
     it('handles multiple hashes', async () => {
-      ipfs.pin.ls.withArgs([pins.root, pins.solarWiki], defaultOptions).returns([{
+      ipfs.pin.query.withArgs([pins.root, pins.solarWiki], defaultOptions).returns([{
         cid: new CID(pins.root),
         type: 'recursive'
       }, {
@@ -186,7 +187,7 @@ describe('pin', () => {
     })
 
     it('can print quietly', async () => {
-      ipfs.pin.ls.withArgs(undefined, defaultOptions).returns([{
+      ipfs.pin.ls.withArgs(defaultOptions).returns([{
         cid: new CID(pins.root),
         type: 'recursive'
       }])
@@ -196,7 +197,7 @@ describe('pin', () => {
     })
 
     it('can print quietly (short option)', async () => {
-      ipfs.pin.ls.withArgs(undefined, defaultOptions).returns([{
+      ipfs.pin.ls.withArgs(defaultOptions).returns([{
         cid: new CID(pins.root),
         type: 'recursive'
       }])
@@ -206,7 +207,7 @@ describe('pin', () => {
     })
 
     it('should ls and print CIDs encoded in specified base', async () => {
-      ipfs.pin.ls.withArgs(undefined, defaultOptions).returns([{
+      ipfs.pin.ls.withArgs(defaultOptions).returns([{
         cid: new CID(pins.root).toV1(),
         type: 'recursive'
       }])
@@ -216,7 +217,7 @@ describe('pin', () => {
     })
 
     it('lists all pins with a timeout', async () => {
-      ipfs.pin.ls.withArgs(undefined, {
+      ipfs.pin.ls.withArgs({
         ...defaultOptions,
         timeout: 1000
       }).returns([{

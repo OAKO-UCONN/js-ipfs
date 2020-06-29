@@ -36,7 +36,7 @@ module.exports = (common, options) => {
     after(() => common.clean())
 
     it('should require a path', () => {
-      expect(ipfs.files.ls()).to.eventually.be.rejected()
+      expect(all(ipfs.files.ls())).to.eventually.be.rejected()
     })
 
     it('lists the root directory', async () => {

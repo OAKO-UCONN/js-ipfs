@@ -34,7 +34,10 @@ module.exports = {
     let result
 
     try {
-      result = await ipfs.dag.get(cid, path, options)
+      result = await ipfs.dag.get(cid, {
+        ...options,
+        path
+      })
     } catch (err) {
       return print(`dag get failed: ${err}`)
     }

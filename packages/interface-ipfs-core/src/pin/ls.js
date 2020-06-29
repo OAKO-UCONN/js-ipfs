@@ -117,14 +117,5 @@ module.exports = (common, options) => {
       expect(pinset[0].type).to.equal('direct')
       expect(pinset[0].cid.toString()).to.equal(fixtures.files[1].cid)
     })
-
-    it('should list pins for a specific hash', async () => {
-      const pinset = await all(ipfs.pin.ls({
-        cid: fixtures.files[0].cid
-      }))
-      expect(pinset).to.have.lengthOf(1)
-      expect(pinset[0].type).to.equal('recursive')
-      expect(pinset[0].cid.toString()).to.equal(fixtures.files[0].cid)
-    })
   })
 }

@@ -4,7 +4,7 @@
 
 Warning: your node requires bootstrappers to join the network and find other peers.
 
-If you edit this list, you may find you have reduced or no connectivity.  If this is the case, please reset your node's bootstrapper list with `ipfs.bootstrap.add({ default: true })`.
+If you edit this list, you may find you have reduced or no connectivity.  If this is the case, please reset your node's bootstrapper list with `ipfs.bootstrap.reset()`.
 
 - [`ipfs.bootstrap.add(addr, [options])`](#ipfsbootstrapaddaddr-options)
   - [Parameters](#parameters)
@@ -51,8 +51,6 @@ An optional object which may have the following keys:
 | timeout | `Number` | `undefined` | A timeout in ms |
 | signal | [AbortSignal][] | `undefined` |  Can be used to cancel any long running requests started as a result of this call |
 
-Note: If passing the `default` option, `addr` is an optional parameter (may be `undefined`/`null`) and options may be passed as the first argument. i.e. `ipfs.bootstrap.add({ default: true })`
-
 ### Returns
 
 | Type | Description |
@@ -96,8 +94,6 @@ An optional object which may have the following keys:
 | ---- | ---- | ------- | ----------- |
 | timeout | `Number` | `undefined` | A timeout in ms |
 | signal | [AbortSignal][] | `undefined` |  Can be used to cancel any long running requests started as a result of this call |
-
-Note: If passing the `default` option, `addr` is an optional parameter (may be `undefined`/`null`) and options may be passed as the first argument. i.e. `ipfs.bootstrap.add({ default: true })`
 
 ### Returns
 
@@ -185,8 +181,6 @@ An optional object which may have the following keys:
 | timeout | `Number` | `undefined` | A timeout in ms |
 | signal | [AbortSignal][] | `undefined` |  Can be used to cancel any long running requests started as a result of this call |
 
-Note: If passing the `all` option, `addr` is an optional parameter (may be `undefined`/`null`) and options may be passed as the first argument. i.e. `ipfs.bootstrap.rm({ all: true })`
-
 ### Returns
 
 | Type | Description |
@@ -226,8 +220,6 @@ An optional object which may have the following keys:
 | ---- | ---- | ------- | ----------- |
 | timeout | `Number` | `undefined` | A timeout in ms |
 | signal | [AbortSignal][] | `undefined` |  Can be used to cancel any long running requests started as a result of this call |
-
-Note: If passing the `all` option, `addr` is an optional parameter (may be `undefined`/`null`) and options may be passed as the first argument. i.e. `ipfs.bootstrap.rm({ all: true })`
 
 ### Returns
 

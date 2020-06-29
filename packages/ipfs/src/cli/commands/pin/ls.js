@@ -53,13 +53,24 @@ module.exports = {
       print(line)
     }
 
-    if (!stream) {
-      const pins = await all(ipfs.pin.ls(paths, { type, stream: false, timeout }))
-      return pins.forEach(printPin)
-    }
+    if (paths && paths.length) {
+      if (!stream) {
+        const pins = await all(ipfs.pin.query(paths, { type, stream: false, timeout }))
+        return pins.forEach(printPin)
+      }
 
-    for await (const res of ipfs.pin.ls(paths, { type, timeout })) {
-      printPin(res)
+      for await (const res of ipfs.pin.query(paths, { type, timeout })) {
+        printPin(res)
+      }
+    } else {
+      if (!stream) {
+        const pins = await all(ipfs.pin.ls({ type, stream: false, timeout }))
+        return pins.forEach(printPin)
+      }
+
+      for await (const res of ipfs.pin.ls({ type, timeout })) {
+        printPin(res)
+      }
     }
   }
 }
