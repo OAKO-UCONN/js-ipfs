@@ -96,7 +96,7 @@ module.exports = ({
     const pin = {
       add: Components.pin.add({ pinManager, gcLock, dag }),
       ls: Components.pin.ls({ pinManager, dag }),
-      query: Components.pin.query({ pinManager }),
+      query: Components.pin.query({ pinManager, dag }),
       rm: Components.pin.rm({ pinManager, gcLock, dag })
     }
 
