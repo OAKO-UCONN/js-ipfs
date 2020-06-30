@@ -73,7 +73,7 @@ A great source of [examples][] can be found in the tests for this API.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| cid | [CID][] | A DAG node that follows one of the supported IPLD formats |
+| cid | [CID][] | A CID that resolves to a node to get |
 
 ### Options
 
@@ -114,27 +114,27 @@ const cid = await ipfs.dag.put(obj, { format: 'dag-cbor', hashAlg: 'sha2-256' })
 console.log(cid.toString())
 // zdpuAmtur968yprkhG9N5Zxn6MFVoqAWBbhUAkNLJs2UtkTq5
 
-async function getAndLog(cidPath) {
-  const result = await ipfs.dag.get(cidPath)
+async function getAndLog(cid, path) {
+  const result = await ipfs.dag.get(cid, { path })
   console.log(result.value)
 }
 
-await getAndLog('zdpuAmtur968yprkhG9N5Zxn6MFVoqAWBbhUAkNLJs2UtkTq5/a')
+await getAndLog(cid, '/a')
 // Logs:
 // 1
 
-await getAndLog('zdpuAmtur968yprkhG9N5Zxn6MFVoqAWBbhUAkNLJs2UtkTq5/b')
+await getAndLog(cid, '/b')
 // Logs:
 // [1, 2, 3]
 
-await getAndLog('zdpuAmtur968yprkhG9N5Zxn6MFVoqAWBbhUAkNLJs2UtkTq5/c')
+await getAndLog(cid, '/c')
 // Logs:
 // {
 //   ca: [5, 6, 7],
 //   cb: 'foo'
 // }
 
-await getAndLog('zdpuAmtur968yprkhG9N5Zxn6MFVoqAWBbhUAkNLJs2UtkTq5/c/ca/1')
+await getAndLog(cid, '/c/ca/1')
 // Logs:
 // 6
 ```

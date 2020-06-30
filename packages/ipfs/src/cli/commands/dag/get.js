@@ -4,6 +4,8 @@ const CID = require('cids')
 const parseDuration = require('parse-duration')
 const { Buffer } = require('buffer')
 
+const IPFS_PREFIX = '/ipfs/'
+
 module.exports = {
   command: 'get <cid path>',
 
@@ -21,6 +23,10 @@ module.exports = {
   },
 
   async handler ({ ctx: { ipfs, print }, cidpath, localResolve, timeout }) {
+    if (cidpath.startsWith(IPFS_PREFIX)) {
+      cidpath = cidpath.substring(IPFS_PREFIX.length)
+    }
+
     const refParts = cidpath.split('/')
     const cidString = refParts[0]
     const path = refParts.slice(1).join('/')

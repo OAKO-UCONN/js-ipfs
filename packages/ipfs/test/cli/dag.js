@@ -31,6 +31,18 @@ describe('dag', () => {
     }
 
     it('should get a node', async () => {
+      const result = {
+        value: Buffer.from('hello world')
+      }
+
+      ipfs.dag.get.withArgs(cid, defaultOptions).returns(result)
+
+      const out = await cli(`dag get ${cid}`, { ipfs })
+
+      expect(out).to.be.eql('0x' + result.value.toString('hex') + '\n')
+    })
+
+    it('should get a node with a deep path', async () => {
       const path = 'parentHash'
       const result = {
         value: Buffer.from('hello world')
@@ -42,6 +54,22 @@ describe('dag', () => {
       }).returns(result)
 
       const out = await cli(`dag get ${cid}/${path}`, { ipfs })
+
+      expect(out).to.be.eql('0x' + result.value.toString('hex') + '\n')
+    })
+
+    it('should get a node with a deep path and an ipfs prefix', async () => {
+      const path = 'parentHash'
+      const result = {
+        value: Buffer.from('hello world')
+      }
+
+      ipfs.dag.get.withArgs(cid, {
+        ...defaultOptions,
+        path
+      }).returns(result)
+
+      const out = await cli(`dag get /ipfs/${cid}/${path}`, { ipfs })
 
       expect(out).to.be.eql('0x' + result.value.toString('hex') + '\n')
     })
