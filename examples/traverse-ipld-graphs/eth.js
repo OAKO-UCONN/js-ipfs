@@ -31,10 +31,10 @@ async function main () {
   const block302517 = 'z43AaGF42R2DXsU65bNnHRCypLPr9sg6D7CUws5raiqATVaB1jj'
   let res
 
-  res = await ipfs.dag.get(block302516 + '/number')
+  res = await ipfs.dag.get(block302516, { path: '/number' })
   console.log(res.value.toString('hex'))
 
-  res = await ipfs.dag.get(block302517 + '/parent/number')
+  res = await ipfs.dag.get(block302517, { path: '/parent/number' })
   console.log(res.value.toString('hex'))
 }
 
