@@ -284,7 +284,7 @@ exports = module.exports = function (dag) {
             stepBin(link, idx, pbh.data)
 
             // walk the links of this fanout bin
-            const res = await dag.get(linkHash, { preload: false })
+            const res = await dag.get(link.Hash, { preload: false })
 
             await pinSet.walkItems(res.value, { stepPin, stepBin })
           }

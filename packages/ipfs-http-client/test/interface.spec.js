@@ -117,10 +117,6 @@ describe('interface-ipfs-core tests', () => {
         reason: 'FIXME vmx 2018-02-22: Currently not supported in go-ipfs, it might be possible once https://github.com/ipfs/go-ipfs/issues/4728 is done'
       },
       {
-        name: 'should get by CID string + path',
-        reason: 'FIXME vmx 2018-02-22: Currently not supported in go-ipfs, it might be possible once https://github.com/ipfs/go-ipfs/issues/4728 is done'
-      },
-      {
         name: 'should get only a CID, due to resolving locally only',
         reason: 'FIXME: go-ipfs does not support localResolve option'
       }

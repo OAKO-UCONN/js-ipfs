@@ -145,13 +145,6 @@ module.exports = (common, options) => {
       expect(cid).to.eql(cidCbor)
     })
 
-    it('should get by CID string + path', async function () {
-      const cidCborStr = cidCbor.toBaseEncodedString()
-
-      const result = await ipfs.dag.get(cidCborStr + '/pb/Data')
-      expect(result.value).to.eql(Buffer.from('I am inside a Protobuf'))
-    })
-
     it('should get only a CID, due to resolving locally only', async function () {
       const result = await ipfs.dag.get(cidCbor, {
         path: 'pb/Data',

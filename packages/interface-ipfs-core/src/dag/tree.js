@@ -67,13 +67,6 @@ module.exports = (common, options) => {
       expect(paths).to.eql([])
     })
 
-    it('should get tree with CID and path as String', async () => {
-      const cidCborStr = cidCbor.toBaseEncodedString()
-
-      const paths = await all(ipfs.dag.tree(cidCborStr + '/someData'))
-      expect(paths).to.eql([])
-    })
-
     it('should get tree with CID recursive (accross different formats)', async () => {
       const paths = await all(ipfs.dag.tree(cidCbor, { recursive: true }))
       expect(paths).to.have.members([
@@ -85,7 +78,10 @@ module.exports = (common, options) => {
     })
 
     it('should get tree with CID and path recursive', async () => {
-      const paths = await all(ipfs.dag.tree(cidCbor, 'pb', { recursive: true }))
+      const paths = await all(ipfs.dag.tree(cidCbor, {
+        path: 'pb',
+        recursive: true
+      }))
       expect(paths).to.have.members([
         'Links',
         'Data'
